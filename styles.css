@@ -1,0 +1,21 @@
+QMainWindow::separator {
+	width: 10px; /* when vertical */
+	height: 10px; /* when horizontal */
+}
+
+QStatusBar {
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+			 stop: 0 #cbccda, stop: 0.05 #ffffff, stop: 0.1 #cbccda, stop: 0.9 #ffffff, stop: 1.0 #dadce8);
+}
+
+QStatusBar QLabel {
+	margin: 2px 5px;
+}
+
+Console {
+	background-color: blue;
+	color: white;
+	font-family: "Monospace";
+	font: bold;
+	font-size: 12px;
+}

@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/logo">
+        <file>pics/logo.png</file>
+        <file>pics/useforthlogo-s.png</file>
+    </qresource>
+    <qresource prefix="/style">
+        <file>styles.css</file>
+    </qresource>
+    <qresource prefix="/icons">
+        <file>pics/project-terminal.png</file>
+        <file>pics/edit-copy.png</file>
+        <file>pics/find-next.png</file>
+        <file>pics/find-previous.png</file>
+        <file>pics/find.png</file>
+        <file>pics/preferences-other.png</file>
+        <file>pics/project-burn.png</file>
+        <file>pics/launch.svgz</file>
+        <file>pics/date.png</file>
+        <file>pics/text_uppercase.png</file>
+    </qresource>
+</RCC>

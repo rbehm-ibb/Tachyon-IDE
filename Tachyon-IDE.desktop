@@ -1,0 +1,19 @@
+[Desktop Entry]
+Comment[en_US]=
+Comment=
+Exec=/home/behm/dvlsw/@ibb/propForth/bin/propForth
+GenericName[en_US]=
+GenericName=
+Icon=/home/behm/dvlsw/@ibb/propForth/pics/useforthlogo-s.png
+MimeType=
+Name[en_US]=
+Name=
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+X-DBUS-ServiceName=
+X-DBUS-StartupType=
+X-KDE-SubstituteUID=false
+X-KDE-Username=
