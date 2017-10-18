@@ -12,9 +12,7 @@ int main(int argc, char *argv[])
 	QApplication app(argc, argv);
 	app.setApplicationName("Tachyon-4th-IDE");
 	app.setApplicationVersion("V1.2d");
-	app.setOrganizationDomain("IBB.com.tw");
 	app.setOrganizationName("R.Behm");
-//	app.setWindowIcon(QIcon(":/logo/pics/logo.png"));
 	app.setWindowIcon(QIcon(":/logo/pics/useforthlogo-s.png"));
 	app.quitOnLastWindowClosed();
 	QString device;
@@ -23,7 +21,7 @@ int main(int argc, char *argv[])
 	// put this into a block to not have it during program lifetime.
 	{
 		QCommandLineParser parser;
-		parser.setApplicationDescription("Tachyon-IDE");
+		parser.setApplicationDescription(app.applicationName());
 		parser.addHelpOption();
 		parser.addVersionOption();
 		parser.addPositionalArgument("filename", "initial file to load");

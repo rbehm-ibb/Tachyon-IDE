@@ -104,7 +104,7 @@ MainWindow::MainWindow(const QString device, uint baud, QWidget *parent)
 	logolabel->setPixmap(logo2.scaled(32, 15));
 	statusBar()->addPermanentWidget(logolabel);
 	m_console->show();
-	connect(m_prop, &Prop::byteRxd, m_console.data(), &Console::update);
+	connect(m_prop, &Prop::byteRxd, m_console.data(), &Console::charRxd);
 	connect(m_console.data(), &Console::sendSerial, m_prop, &Prop::send);
 
 	m_findDock = new QDockWidget(tr("Find"), this);
@@ -144,23 +144,19 @@ void MainWindow::about()
 	QString text("<h1>%1</h1>"
 		     "<p>Version %2"
 		     "<p>&copy; %3, <img src=\":/logo/ibb-logo\">"
-//		     "<p>Web: <a href=\"http://%5\">http://%5</a>"
-		     "<p>Mail: <a href=\"mailto:info@%5\">info@%5</a>"
-		     "<p>Using  <img src=\":/stdicons/qt-logo-about.png\"> %6"
-		     "<p>Connected at %7"
+//		     "<p>Web: <a href=\"https://github.com/rbehm-ibb/Tachyon-IDE\">https://github.com/rbehm-ibb/Tachyon-IDE</a>"
+		     "<p>Mail: <a href=\"mailto:rbehm@hushmail.com\">rbehm@hushmail.com</a>"
+		     "<p>Using  <img src=\":/stdicons/qt-logo-about.png\"> %5"
+		     "<p>Connected at %6"
 		     );
 	text = text
 		.arg(qApp->applicationName())
 		.arg(qApp->applicationVersion())
 		.arg(year)
-		.arg(qApp->organizationDomain())
-//		.arg(qApp->organizationDomain())
 		.arg(qVersion())
 		.arg(m_prop->device())
 		;
-//	setWindowIcon(QIcon(":/logo/pics/logo.png"));
 	QMessageBox::about(this, qApp->applicationName(), text);
-//	setWindowIcon(save);
 }
 
 void MainWindow::open()

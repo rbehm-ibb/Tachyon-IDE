@@ -1,0 +1,33 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="add">stdicons/add.svgz</file>
+        <file alias="left">stdicons/back.svgz</file>
+        <file alias="bottom">stdicons/bottom.svgz</file>
+        <file alias="configure">stdicons/configure.svgz</file>
+        <file alias="exit">stdicons/exit.svgz</file>
+        <file alias="fileclose">stdicons/fileclose.svgz</file>
+        <file alias="filenew">stdicons/filenew.svgz</file>
+        <file alias="fileopen">stdicons/fileopen.svgz</file>
+        <file alias="fileprint">stdicons/fileprint.svgz</file>
+        <file alias="gohome">stdicons/gohome.svgz</file>
+        <file alias="info">stdicons/info.svgz</file>
+        <file alias="next">stdicons/next.svgz</file>
+        <file alias="pause">stdicons/player_pause.svgz</file>
+        <file alias="remove">stdicons/remove.svgz</file>
+        <file alias="up">stdicons/up.svgz</file>
+        <file alias="down">stdicons/down.svgz</file>
+        <file alias="right">stdicons/forward.svgz</file>
+        <file alias="top">stdicons/top.svgz</file>
+        <file alias="stop">stdicons/player_stop.svgz</file>
+        <file alias="wizard">stdicons/wizard.svgz</file>
+        <file>stdicons/qt-logo-about.png</file>
+        <file alias="doc-save-as">stdicons/document-save-as.png</file>
+        <file alias="doc-save">stdicons/document-save.png</file>
+        <file alias="zoom-in">stdicons/zoom_in.png</file>
+        <file alias="zoom-out">stdicons/zoom_out.png</file>
+        <file alias="rotate-ccw">stdicons/rotate_ccw.svgz</file>
+        <file alias="rotate-cw">stdicons/rotate_cw.svgz</file>
+        <file>stdicons/locationbar_erase.png</file>
+        <file alias="config">stdicons/wrench_orange.png</file>
+    </qresource>
+</RCC>

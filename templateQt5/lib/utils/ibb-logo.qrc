@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/logo">
+        <file alias="ibb-logo">stdicons/logo1-ibb-w.png</file>
+    </qresource>
+</RCC>
