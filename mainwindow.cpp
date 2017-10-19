@@ -12,6 +12,8 @@
 #include "wordsview.h"
 #include "prop.h"
 #include "console.h"
+#include "helpview.h"
+#include "helpmodel.h"
 
 MainWindow::MainWindow(const QString device, uint baud, QWidget *parent)
 	: QMainWindow(parent)
@@ -107,13 +109,6 @@ MainWindow::MainWindow(const QString device, uint baud, QWidget *parent)
 	connect(m_prop, &Prop::byteRxd, m_console.data(), &Console::charRxd);
 	connect(m_console.data(), &Console::sendSerial, m_prop, &Prop::send);
 
-	m_findDock = new QDockWidget(tr("Find"), this);
-	m_findDock->setFeatures(QDockWidget::AllDockWidgetFeatures);
-	m_findDock->setAllowedAreas(Qt::BottomDockWidgetArea);
-	addDockWidget(Qt::BottomDockWidgetArea, m_findDock);
-	m_findDock->setWidget(m_findDialog = new FindDialog);
-	connect(m_findDialog, &FindDialog::find, this, &MainWindow::findInSource);
-
 	m_wordsDock = new QDockWidget(tr("Words"), this);
 	m_wordsDock->setFeatures(QDockWidget::AllDockWidgetFeatures);
 	m_wordsDock->setAllowedAreas(Qt::LeftDockWidgetArea);
@@ -122,6 +117,23 @@ MainWindow::MainWindow(const QString device, uint baud, QWidget *parent)
 	m_wordsView->setSelectionBehavior(QAbstractItemView::SelectRows);
 	m_wordsView->setSelectionMode(QAbstractItemView::SingleSelection);
 	connect(m_wordsView, &WordsView::currentMoved, this, &MainWindow::currentMoved);
+
+	m_helpDock = new QDockWidget(tr("Help"), this);
+	m_helpDock->setFeatures(QDockWidget::AllDockWidgetFeatures);
+	m_helpDock->setAllowedAreas(Qt::LeftDockWidgetArea);
+	addDockWidget(Qt::LeftDockWidgetArea, m_helpDock);
+	HelpModel *help = new HelpModel(this);
+	help->load();
+	m_helpDock->setWidget(m_helpView = new HelpView(help));
+
+
+	m_findDock = new QDockWidget(tr("Find"), this);
+	m_findDock->setFeatures(QDockWidget::AllDockWidgetFeatures);
+	m_findDock->setAllowedAreas(Qt::BottomDockWidgetArea);
+	addDockWidget(Qt::BottomDockWidgetArea, m_findDock);
+	m_findDock->setWidget(m_findDialog = new FindDialog);
+	connect(m_findDialog, &FindDialog::find, this, &MainWindow::findInSource);
+
 	connect(m_editor, &QPlainTextEdit::textChanged, this, &MainWindow::textChanged);
 	portName(m_prop->device());
 }
@@ -256,7 +268,6 @@ void MainWindow::saveFile(const QString fileName)
 
 void MainWindow::enterDate()
 {
-	qDebug() << Q_FUNC_INFO;
 	QString dt = QDate::currentDate().toString(Qt::ISODate);
 	m_editor->insertPlainText(dt);
 }
@@ -264,14 +275,13 @@ void MainWindow::enterDate()
 void MainWindow::toUpper()
 {
 	QString sel = m_editor->textCursor().selectedText();
-	qDebug() << Q_FUNC_INFO << sel;
 	m_editor->textCursor().removeSelectedText();
 	m_editor->textCursor().insertText(sel.toUpper());
 }
 
 void MainWindow::showDocs()
 {
-	QString fn = QFileDialog::getOpenFileName(this, "Load File", qApp->applicationDirPath() + "/docs", "*.pdf");
+	QString fn = QFileDialog::getOpenFileName(this, "Open File", qApp->applicationDirPath() + "/docs", "*.pdf");
 	if (! fn.isEmpty())
 	{
 		showDoc(fn);
@@ -368,13 +378,13 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	else
 	{
 		event->accept();
+	}
+	if (event->isAccepted())
+	{
 		if (m_console)
 		{
 			m_console->closeIt();
 		}
-	}
-	if (event->isAccepted())
-	{
 		qApp->closeAllWindows();
 	}
 }

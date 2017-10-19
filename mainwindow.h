@@ -12,6 +12,7 @@ class Console;
 class FindDialog;
 class WordsModel;
 class WordsView;
+class HelpView;
 
 class MainWindow : public QMainWindow
 {
@@ -57,6 +58,8 @@ private:
 	WordsModel *m_wordsModel;
 	WordsView *m_wordsView;
 	QDockWidget *m_wordsDock;
+	HelpView *m_helpView;
+	QDockWidget *m_helpDock;
 	Prop *m_prop;
 	QPointer<Console> m_console;
 

@@ -25,8 +25,6 @@ WordsView::WordsView(WordsModel *model, QWidget *parent)
 	setContextMenuPolicy(Qt::ActionsContextMenu);
 }
 
-
-
 void WordsView::currentChanged(const QModelIndex &current, const QModelIndex &)
 {
 	emit currentMoved(current);

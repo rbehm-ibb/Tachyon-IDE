@@ -23,7 +23,9 @@ HEADERS += \
     console.h \
     finddialog.h \
     wordsmodel.h \
-    wordsview.h
+    wordsview.h \
+    helpmodel.h \
+    helpview.h
 
 SOURCES += \
     main.cpp \
@@ -32,7 +34,9 @@ SOURCES += \
     console.cpp \
     finddialog.cpp \
     wordsmodel.cpp \
-    wordsview.cpp
+    wordsview.cpp \
+    helpmodel.cpp \
+    helpview.cpp
 
 RESOURCES += \
     icons.qrc
@@ -41,4 +45,8 @@ OTHER_FILES += \
     styles.css
 
 FORMS += \
+
+DISTFILES += \
+    README.md \
+    changelog.md
 
