@@ -10,14 +10,12 @@ include( templateQt5/lib/utils/stdicons.pri )
 include( templateQt5/lib/utils/ibb-logo.pri )
 include( templateQt5/lib/utils/config.pri )
 include( templateQt5/lib/utils/toolbarspacer.pri )
-include( templateQt5/lib/utils/ledicon/ledicon.pri )
 include( templateQt5/lib/serialport/ibserialport.pri )
 
 # select which ones are needed
 QT += core gui widgets
 
 HEADERS += \
-    main.h \
     mainwindow.h \
     prop.h \
     console.h \
@@ -25,7 +23,8 @@ HEADERS += \
     wordsmodel.h \
     wordsview.h \
     helpmodel.h \
-    helpview.h
+    helpview.h \
+    interfaceconfigdialog.h
 
 SOURCES += \
     main.cpp \
@@ -36,7 +35,8 @@ SOURCES += \
     wordsmodel.cpp \
     wordsview.cpp \
     helpmodel.cpp \
-    helpview.cpp
+    helpview.cpp \
+    interfaceconfigdialog.cpp
 
 RESOURCES += \
     icons.qrc
@@ -45,6 +45,7 @@ OTHER_FILES += \
     styles.css
 
 FORMS += \
+    interfaceconfigdialog.ui
 
 DISTFILES += \
     README.md \

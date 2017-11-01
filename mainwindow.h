@@ -13,6 +13,7 @@ class FindDialog;
 class WordsModel;
 class WordsView;
 class HelpView;
+class InterfaceConfigDialog;
 
 class MainWindow : public QMainWindow
 {
@@ -39,6 +40,7 @@ private slots:
 	void showDocs();
 	void saveWords();
 	void rescan();
+	void config();
 	void upload();
 	void find();
 	void findNext();
@@ -47,6 +49,7 @@ private slots:
 	void currentMoved(const QModelIndex &current);
 	void showDoc(const QString fn);
 	void textChanged();
+	void deviceChanged(const QString deviceBaud) const;
 protected:
 private:
 	QLabel *m_lFile;
@@ -62,6 +65,7 @@ private:
 	QDockWidget *m_helpDock;
 	Prop *m_prop;
 	QPointer<Console> m_console;
+	QPointer<InterfaceConfigDialog> m_config;
 
 	// QWidget interface
 protected:

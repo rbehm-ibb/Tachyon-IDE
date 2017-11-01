@@ -1,10 +1,10 @@
 [Desktop Entry]
 Comment[en_US]=
 Comment=
-Exec=/home/behm/dvlsw/@ibb/propForth-IDE/bin/tachyonForth-IDE
+Exec=/home/behm/dvlsw/@ibb/Tachyon-IDE/bin/tachyonForth-IDE
 GenericName[en_US]=
 GenericName=
-Icon=/home/behm/dvlsw/@ibb/propForth-IDE/pics/useforthlogo-s.png
+Icon=/home/behm/dvlsw/@ibb/Tachyon-IDE/pics/useforthlogo-s.png
 MimeType=
 Name[en_US]=
 Name=

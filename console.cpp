@@ -126,8 +126,9 @@ void Console::sendDate()
 	QString dt(" #%1 DATE! #%2 TIME!\r");
 	QDateTime cdt = QDateTime::currentDateTime();
 	dt = dt.arg(cdt.toString("yyMMdd")).arg(cdt.toString("HHmmss"));
-	qDebug() << dt;
+//	qDebug() << dt;
 	sendPort(dt);
+	sendPort("cr .dt\r");
 }
 
 void Console::charRxd(char ch)
@@ -145,6 +146,14 @@ void Console::charRxd(char ch)
 	case 0x0c:
 		setPlainText("");
 		return;
+	case 0x08:
+	{
+		QString text = toPlainText();
+		setPlainText(text.mid(0, text.length() - 1));
+		moveCursor(QTextCursor::End);
+	}
+		return;
+
 	}
 	QString text = "";
 	moveCursor(QTextCursor::End);

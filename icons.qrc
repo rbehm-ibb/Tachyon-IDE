@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/logo">
-        <file>pics/logo.png</file>
         <file>pics/useforthlogo-s.png</file>
     </qresource>
     <qresource prefix="/style">

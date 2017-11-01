@@ -21,7 +21,7 @@ Prop::Prop(const QString name, uint baud, QObject *parent)
 	}
 	connect(m_port, &IBSerialPort::readyRead, this, &Prop::readyRead);
 	connect(m_timer, &QTimer::timeout, this, &Prop::timerTick);
-	qDebug() << Q_FUNC_INFO << m_port->portName() << m_port->baudRate();
+//	qDebug() << Q_FUNC_INFO << m_port->portName() << m_port->baudRate();
 }
 
 Prop::~Prop()
@@ -31,6 +31,41 @@ Prop::~Prop()
 QString Prop::device() const
 {
 	return m_port->device();
+}
+
+QString Prop::portName() const
+{
+	return m_port->portName();
+}
+
+uint Prop::baud() const
+{
+	return m_port->baudRate();
+}
+
+void Prop::setDevice(const QString portName, uint baud) const
+{
+	if (m_port->isOpen())
+	{
+		m_port->close();
+	}
+	m_port->setPortName(portName);
+	m_port->setBaudRate(baud);
+	if (! m_port->open(QIODevice::ReadWrite))
+	{
+		qWarning() << Q_FUNC_INFO << m_port->portName() << m_port->errorString();
+//		return;
+	}
+	if (m_port->isOpen())
+	{
+		Config::setValue("hw/port", m_port->portName());
+		Config::setValue("hw/baud", m_port->baudRate());
+	}
+	m_port->setParity(QSerialPort::NoParity);
+	m_port->setDataBits(QSerialPort::Data8);
+	m_port->setFlowControl(QSerialPort::NoFlowControl);
+	m_port->setObjectName(portName);
+	emit deviceChanged(m_port->device());
 }
 
 void Prop::send(const QByteArray ba)

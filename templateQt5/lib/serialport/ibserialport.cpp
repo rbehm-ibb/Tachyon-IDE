@@ -27,6 +27,8 @@ void IBSerialPort::portError(QSerialPort::SerialPortError err)
 {
 	switch(err)
 	{
+	case QSerialPort::NoError:
+		break;
 	case QSerialPort::ResourceError:
 		emit lostPortError();
 		break;

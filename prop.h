@@ -18,11 +18,15 @@ public:
 
 	IBSerialPort *port() const { return m_port; }
 	QString device() const;
+	QString portName() const;
+	uint baud() const;
 
 signals:
 	void byteRxd(char c);
+	void deviceChanged(const QString deviceBaud) const;
 
 public slots:
+	void setDevice(const QString device, uint baud) const;
 	void send(const QByteArray ba);
 	void upload(const QByteArray ba);
 	void resetProp();

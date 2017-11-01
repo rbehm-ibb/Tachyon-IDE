@@ -7,6 +7,7 @@
 #include "mainwindow.h"
 #include "config.h"
 #include "toolbarspacer.h"
+#include "interfaceconfigdialog.h"
 #include "finddialog.h"
 #include "wordsmodel.h"
 #include "wordsview.h"
@@ -73,6 +74,8 @@ MainWindow::MainWindow(const QString device, uint baud, QWidget *parent)
 //	editMenu->addAction(act);
 	connect(act, &QAction::triggered, this, &MainWindow::saveWords);
 	toolbar->addSeparator();
+	act = toolbar->addAction(QIcon(":/config"), tr("Config"));
+	connect(act, &QAction::triggered, this, &MainWindow::config);
 	act = toolbar->addAction(QIcon(":/icons/pics/project-burn.png"), tr("Upload"));
 	act->setShortcut(QKeySequence("Ctrl+U"));
 	propMenu->addAction(act);
@@ -135,7 +138,8 @@ MainWindow::MainWindow(const QString device, uint baud, QWidget *parent)
 	connect(m_findDialog, &FindDialog::find, this, &MainWindow::findInSource);
 
 	connect(m_editor, &QPlainTextEdit::textChanged, this, &MainWindow::textChanged);
-	portName(m_prop->device());
+	connect(m_prop, &Prop::deviceChanged, this, &MainWindow::deviceChanged);
+	deviceChanged(m_prop->device());
 }
 
 
@@ -175,7 +179,9 @@ void MainWindow::open()
 {
 	if (m_changed)
 	{
-		int rc = QMessageBox::warning(this, "Not saved", QString("The file\n%1\nhas not been saved\n\nLoad anyway?").arg(m_lFile->text()),
+		int rc = QMessageBox::warning(this, "Not saved",
+					      QString("The file\n%1\nhas not been saved\n\nLoad anyway?")
+					      .arg(m_lFile->text()),
 					      QMessageBox::Yes | QMessageBox::No);
 		switch (rc)
 		{
@@ -185,7 +191,8 @@ void MainWindow::open()
 			break;
 		}
 	}
-	QString fn = QFileDialog::getOpenFileName(this, "Load File", Config::stringValue("file/name", qApp->applicationDirPath()), "*.fth");
+	QString fn = QFileDialog::getOpenFileName(this, "Load File",
+						  Config::stringValue("file/name", qApp->applicationDirPath()), "*.fth");
 	if (! fn.isEmpty())
 	{
 		loadFile(fn);
@@ -207,7 +214,9 @@ void MainWindow::save()
 
 void MainWindow::saveAs()
 {
-	QString fn = QFileDialog::getSaveFileName(this, "Save File", Config::stringValue("file/name", qApp->applicationDirPath()), "*.fth");
+	QString fn = QFileDialog::getSaveFileName(this, "Save File",
+						  Config::stringValue("file/name", qApp->applicationDirPath()),
+						  "*.fth");
 	if (! fn.isEmpty())
 	{
 		saveFile(fn);
@@ -218,7 +227,8 @@ void MainWindow::newDoc()
 {
 	if (m_changed)
 	{
-		int rc = QMessageBox::warning(this, "Not saved", QString("The file\n%1\nhas not been saved\n\nClear anyway?").arg(m_lFile->text()),
+		int rc = QMessageBox::warning(this, "Not saved",
+					      QString("The file\n%1\nhas not been saved\n\nClear anyway?").arg(m_lFile->text()),
 					      QMessageBox::Yes | QMessageBox::No);
 		switch (rc)
 		{
@@ -239,6 +249,11 @@ void MainWindow::loadFile(const QString fileName)
 	if (! f.open(QIODevice::ReadOnly))
 	{
 		qWarning() << Q_FUNC_INFO << f.fileName() << f.errorString();
+		QMessageBox::critical(this, "Problem loading File",
+					      QString("The file\n\n%1\n\ncannot be opened.\n\n%2")
+				      .arg(f.fileName())
+				      .arg(f.errorString()),
+				      QMessageBox::Yes);
 		return;
 	}
 	QTextStream s(&f);
@@ -252,15 +267,30 @@ void MainWindow::loadFile(const QString fileName)
 
 void MainWindow::saveFile(const QString fileName)
 {
-	qWarning() << Q_FUNC_INFO << fileName;
+//	qWarning() << Q_FUNC_INFO << fileName;
 	QFile f(fileName);
 	if (! f.open(QIODevice::WriteOnly | QIODevice::Truncate))
 	{
 		qWarning() << Q_FUNC_INFO << f.fileName() << f.errorString();
+		QMessageBox::critical(this, "Problem saving File",
+					      QString("The file\n\n%1\n\ncannot be created.\n\n%2")
+				      .arg(f.fileName())
+				      .arg(f.errorString()),
+				      QMessageBox::Yes);
 		return;
 	}
 	QTextStream s(&f);
 	s << m_editor->toPlainText();
+	if (s.status() != QTextStream::Ok)
+	{
+		QMessageBox::critical(this, "Problem writing to File",
+					      QString("The file\n\n%1\n\ncannot be saved.\n\n%2\n%3")
+				      .arg(f.fileName())
+				      .arg(f.errorString())
+				      .arg(s.status()),
+				      QMessageBox::Yes);
+		return;
+	}
 	m_lFile->setText(f.fileName());
 	Config::setValue("file/name", f.fileName());
 	m_changed = false;
@@ -299,6 +329,11 @@ void MainWindow::textChanged()
 	m_changed = true;
 }
 
+void MainWindow::deviceChanged(const QString deviceBaud) const
+{
+	m_lPort->setText(deviceBaud);
+}
+
 void MainWindow::saveWords()
 {
 	m_wordsModel->save();
@@ -307,6 +342,16 @@ void MainWindow::saveWords()
 void MainWindow::rescan()
 {
 	m_wordsModel->analyse(m_editor->toPlainText());
+}
+
+void MainWindow::config()
+{
+	if (! m_config)
+	{
+		m_config = new InterfaceConfigDialog(this);
+	}
+	m_config->setProp(m_prop);
+	m_config->exec();
 }
 
 void MainWindow::upload()
