@@ -12,3 +12,4 @@ Implement a help function for Tachyon words by parsing the HLP text files on the
 Add UI function to select port and baudrate. Done.
 
 Implemant full ANSI mode for terminal, at least what Tachynon is using.
+
