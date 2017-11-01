@@ -8,6 +8,7 @@ Roadmap:
 
 Implement a help function for Tachyon words by parsing the HLP text files on the Tachyon dropbox site. Done.
 
-Add UI function to select port and baudrate. Testing.
+Add UI function to select port and baudrate. Done.
 
 Implemant full ANSI mode for terminal, at least waht Tachynon is using.
+
