@@ -3,3 +3,5 @@
 CVS
 bin
 *.pro.user
+*~
+Makefile

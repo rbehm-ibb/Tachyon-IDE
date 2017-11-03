@@ -24,7 +24,7 @@ public slots:
 	void sendDate();
 private:
 
-	void    sendPort(QString s);
+	void sendPort(QString s);
 
 	bool isEnabled;
 

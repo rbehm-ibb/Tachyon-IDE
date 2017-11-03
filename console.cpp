@@ -153,6 +153,9 @@ void Console::charRxd(char ch)
 		moveCursor(QTextCursor::End);
 	}
 		return;
+	case '\a':
+		qApp->beep();
+		return;
 
 	}
 	QString text = "";
