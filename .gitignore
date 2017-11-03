@@ -1,0 +1,5 @@
+.build
+.cvsignore
+CVS
+bin
+*.pro.user
