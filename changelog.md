@@ -11,4 +11,4 @@ add port setup dialog
 
 V1.5d 2016-10-31
 fixed handling of backspace
-
+fixed handling of beep on rx
