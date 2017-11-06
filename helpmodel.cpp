@@ -30,10 +30,11 @@ void HelpModel::load()
 			qWarning() << Q_FUNC_INFO << f.fileName() << f.errorString();
 			continue;
 		}
-//		qDebug() << f.fileName();
+//		qDebug() << Q_FUNC_INFO << f.fileName();
 		// parse the file, look for lines of the form "word ( xxx -- xx) text"
 		QTextStream s(&f);
 		QString header;
+		bool hadAny =false;
 		while (! s.atEnd())
 		{
 			QString line = s.readLine();
@@ -69,7 +70,14 @@ void HelpModel::load()
 //				item.description = "@ " + item.file + "\n" + item.description;
 //				qDebug() << item.file << item.word << item.parms << item.description;
 				m_data.append(item);
+				hadAny = true;
 			}
+		}
+		if (! hadAny)
+		{
+			HelpItem item;
+			item.file = fi.baseName();
+			m_data.append(item);
 		}
 	}
 	endResetModel();

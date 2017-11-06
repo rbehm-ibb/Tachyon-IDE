@@ -14,5 +14,6 @@
         <file>pics/launch.svgz</file>
         <file>pics/date.png</file>
         <file>pics/text_uppercase.png</file>
+        <file>pics/eye.png</file>
     </qresource>
 </RCC>

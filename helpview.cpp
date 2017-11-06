@@ -28,6 +28,11 @@ HelpView::HelpView(HelpModel *model, QWidget *parent)
 	}
 	header->setStretchLastSection(true);
 	connect(m_tabView->selectionModel(), &QItemSelectionModel::currentChanged, this, &HelpView::currentChanged);
+	QAction *actView = new QAction(QIcon(":/icons/pics/eye.png"), "View", this);
+	actView->setShortcut(QKeySequence("Ctrl+V"));
+	connect(actView, &QAction::triggered, this, &HelpView::view);
+	m_tabView->addAction(actView);
+	m_tabView->setContextMenuPolicy(Qt::ActionsContextMenu);
 }
 
 void HelpView::currentChanged(const QModelIndex &current, const QModelIndex &previous)
@@ -47,5 +52,27 @@ void HelpView::currentChanged(const QModelIndex &current, const QModelIndex &pre
 		txt += "<b>" + w + "</b> <i>" + item.parms + "</i><p>" + item.description;
 		txt += "<p><b>@" + item.file + "</b></p>";
 		m_text->setText(txt);
+	}
+}
+
+void HelpView::view()
+{
+	QModelIndex idx = m_tabView->currentIndex();
+	if (idx.isValid())
+	{
+		QString hlp = idx.sibling(idx.row(), 0).data().toString();
+//		qDebug() << Q_FUNC_INFO << idx << hlp;
+		if (! hlp.isEmpty())
+		{
+			QDir dir(qApp->applicationDirPath() + "/help");
+			QFile f(dir.absoluteFilePath(hlp + ".TXT"));
+			if (! f.open(QIODevice::ReadOnly))
+			{
+				qWarning() << Q_FUNC_INFO << f.fileName() << f.errorString();
+				return;
+			}
+			QString txt = f.readAll();
+			m_text->setText(txt);
+		}
 	}
 }

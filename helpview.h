@@ -23,6 +23,7 @@ signals:
 //	void showHelp(QString txt);
 private slots:
 	virtual void currentChanged(const QModelIndex &current, const QModelIndex &previous);
+	void view();
 };
 
 #endif // HELPVIEW_H
