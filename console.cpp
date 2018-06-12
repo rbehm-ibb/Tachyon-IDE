@@ -123,12 +123,12 @@ void Console::resizeEvent(QResizeEvent *e)
 
 void Console::sendDate()
 {
-	QString dt(" #%1 DATE! #%2 TIME!\r");
+	QString dt(" #%1 DATE! #%2 TIME! #%3 DAY\r");
 	QDateTime cdt = QDateTime::currentDateTime();
-	dt = dt.arg(cdt.toString("yyMMdd")).arg(cdt.toString("HHmmss"));
+	dt = dt.arg(cdt.toString("yyMMdd")).arg(cdt.toString("HHmmss")).arg(cdt.date().dayOfWeek());
 //	qDebug() << dt;
 	sendPort(dt);
-	sendPort("cr .dt\r");
+	sendPort("CR .DT\r");
 }
 
 void Console::charRxd(char ch)
