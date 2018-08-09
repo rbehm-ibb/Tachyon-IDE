@@ -49,5 +49,6 @@ FORMS += \
 
 DISTFILES += \
     README.md \
-    changelog.md
+    changelog.md \
+    LICENSE
 
