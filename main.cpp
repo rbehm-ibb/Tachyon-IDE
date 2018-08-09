@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 {
 	QApplication app(argc, argv);
 	app.setApplicationName("Tachyon-4th-IDE");
-	app.setApplicationVersion("V1.6d");
+	app.setApplicationVersion("V1.7");
 	app.setOrganizationName("R.Behm");
 	app.setWindowIcon(QIcon(":/logo/pics/useforthlogo-s.png"));
 	app.quitOnLastWindowClosed();
