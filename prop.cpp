@@ -125,7 +125,7 @@ void Prop::timerTick()
 		m_lastWasSpace = true;
 		break;
 	case '\r':
-		m_timer->start(20);
+		m_timer->start(5);
 		break;
 //	case '\n':
 //		timer->start(20);
