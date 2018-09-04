@@ -11,6 +11,7 @@ include( templateQt5/lib/utils/ibb-logo.pri )
 include( templateQt5/lib/utils/config.pri )
 include( templateQt5/lib/utils/toolbarspacer.pri )
 include( templateQt5/lib/serialport/ibserialport.pri )
+include( $$[PRTEMPLATE]/lib/utils/singleapp/singleapp.pri )
 
 # select which ones are needed
 QT += core gui widgets
