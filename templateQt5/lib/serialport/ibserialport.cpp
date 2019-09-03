@@ -44,7 +44,7 @@ void IBSerialPort::init(QString dev, int defaultBaud)
 	{
 		bool ok;
 		QString sbaud = dev.section(':', 1);
-		baud = sbaud.toUInt(&ok);
+		baud = sbaud.toInt(&ok);
 		if (! ok)
 		{
 			qWarning() << Q_FUNC_INFO << "Bad baudrate given" << dev << "using default";
@@ -62,5 +62,5 @@ void IBSerialPort::init(QString dev, int defaultBaud)
 	setDataBits(QSerialPort::Data8);
 	setFlowControl(QSerialPort::NoFlowControl);
 	setObjectName(device());
-	connect(this, static_cast<void (QSerialPort::*)(QSerialPort::SerialPortError)>(&QSerialPort::error), this, &IBSerialPort::portError);
+	connect(this, QOverload<QSerialPort::SerialPortError>::of(QSerialPort::error), this, SLOT(portError(QSerialPort::SerialPortError)));
 }

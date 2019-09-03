@@ -31,12 +31,12 @@ public:
 	/// \param key  the key where the setting is stored, can contains group/key
 	/// \param defaultValue if there is no setting for key then use this value, store it also
 	/// \return  the value as a QString
-	static QString stringValue(const QString &key, const QString &defaultValue = QString::null);
+	static QString stringValue(const QString &key, const QString &defaultValue = QString());
 	/// \brief stringValue get a value converted to a QString, this saves the creation of a QString for the caller
 	/// \param key the key where the setting is stored, can contains group/key
 	/// \param defaultValue if there is no setting for key then use this value, store it also
 	/// \return  the value as a QString
-	static QString stringValue(const char *key, const QString &defaultValue = QString::null);
+	static QString stringValue(const char *key, const QString &defaultValue = QString());
 	/// \brief intValue get a value converted to a int
 	/// \param key  the key where the setting is stored, can contains group/key
 	/// \param defaultValue if there is no setting for key then use this value, store it also, INT_MIN is handled as no default given
@@ -93,7 +93,7 @@ private:
 	/// \return the created instance
 	static Config *i();
 	static Config *instance;		///< the singleton instance
-	explicit Config(QObject *parent = 0);	///< non accessible _ct_
+	explicit Config(QObject *parent =nullptr);	///< non accessible _ct_
 };
 
 #endif // CONFIG_H

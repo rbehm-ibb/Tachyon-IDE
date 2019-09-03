@@ -5,6 +5,8 @@
 # // ******************************************************
 
 TEMPLATE = app
+DEFINES += QT_NO_DEPRECATED_WARNINGS
+
 include( templateQt5/project.pri )
 include( templateQt5/lib/utils/stdicons.pri )
 include( templateQt5/lib/utils/ibb-logo.pri )
