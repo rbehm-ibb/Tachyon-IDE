@@ -50,8 +50,12 @@ private slots:
 	void showDoc(const QString fn);
 	void textChanged();
 	void deviceChanged(const QString deviceBaud) const;
+	void loadPrev();
 protected:
+	virtual void closeEvent(QCloseEvent *);
 private:
+	void addPrev(const QString fn);
+	const QStringList readPrev() const;
 	QLabel *m_lFile;
 	QLabel *m_lPort;
 	bool m_changed;
@@ -66,10 +70,7 @@ private:
 	Prop *m_prop;
 	QPointer<Console> m_console;
 	QPointer<InterfaceConfigDialog> m_config;
-
-	// QWidget interface
-protected:
-	virtual void closeEvent(QCloseEvent *);
+	QMenu *prevMenu;
 };
 
 #endif // MAINWINDOW_H

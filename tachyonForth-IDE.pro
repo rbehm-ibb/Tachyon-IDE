@@ -5,15 +5,12 @@
 # // ******************************************************
 
 TEMPLATE = app
-DEFINES += QT_NO_DEPRECATED_WARNINGS
-
 include( templateQt5/project.pri )
 include( templateQt5/lib/utils/stdicons.pri )
 include( templateQt5/lib/utils/ibb-logo.pri )
 include( templateQt5/lib/utils/config.pri )
 include( templateQt5/lib/utils/toolbarspacer.pri )
 include( templateQt5/lib/serialport/ibserialport.pri )
-include( $$[PRTEMPLATE]/lib/utils/singleapp/singleapp.pri )
 
 # select which ones are needed
 QT += core gui widgets
@@ -52,6 +49,7 @@ FORMS += \
 
 DISTFILES += \
     README.md \
+    bin/Tachyon-4th-IDE.rc \
     changelog.md \
     LICENSE
 

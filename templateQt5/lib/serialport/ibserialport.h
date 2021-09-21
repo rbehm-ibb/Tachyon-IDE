@@ -10,6 +10,7 @@
 ///
 /// \brief The IBSerialPort class is a simple extension to QSerialPort.
 ///
+/// It consists only a constructor.
 /// The constructor creates a QSerialPort with standard settings and allows a baudrate to be given
 /// with the device parameter. The optional baudrate is appended to the device name with a ":".
 ///
@@ -26,6 +27,7 @@ public:
 	/// \param parent for QObject
 	IBSerialPort(QString device, QObject *parent = nullptr);
 	IBSerialPort(QString device, int defaultBaud, QObject *parent = nullptr);
+	IBSerialPort(quint16 vid, quint16 pid, QString serNr, int baud, QObject *parent = nullptr);
 	QString device() const;
 signals:
 	void lostPortError();

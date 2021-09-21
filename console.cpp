@@ -101,7 +101,7 @@ void Console::sendPort(QString s)
 	QByteArray ba;
 	foreach(QChar c, s.toUtf8())
 	{
-		ba.append(c);
+		ba.append(c.toLatin1());
 		emit sendSerial(ba);
 		ba.clear();
 		thread()->yieldCurrentThread();
@@ -112,9 +112,9 @@ void Console::resizeEvent(QResizeEvent *e)
 {
 	QFontMetrics fm(font());
 	maxcol = width() / 8;
-	if(fm.width("X") > 0)
+	if(fm.horizontalAdvance("X") > 0)
 	{
-		maxcol = width() / fm.width("X") - 3;
+		maxcol = width() / fm.horizontalAdvance("X") - 3;
 	}
 
 	//qDebug() << maxcol << width() << fm.width("X");
