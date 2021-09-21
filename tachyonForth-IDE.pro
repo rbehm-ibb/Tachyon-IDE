@@ -49,7 +49,7 @@ FORMS += \
 
 DISTFILES += \
     README.md \
-    bin/Tachyon-4th-IDE.rc \
     changelog.md \
-    LICENSE
+    LICENSE \
+    .gitignore
 
