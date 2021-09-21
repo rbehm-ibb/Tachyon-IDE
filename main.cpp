@@ -6,14 +6,13 @@
 
 #include "mainwindow.h"
 #include "config.h"
-#include "singleapp.h"
 
 int main(int argc, char *argv[])
 {
 	QApplication app(argc, argv);
 	app.setApplicationName("Tachyon-4th-IDE");
-	app.setApplicationVersion("V1.8");
-	app.setOrganizationName("R.Behm");
+	app.setApplicationVersion("V1.9");
+	app.setOrganizationName("ibb-aviotec.com");
 	app.setWindowIcon(QIcon(":/logo/pics/useforthlogo-s.png"));
 	app.quitOnLastWindowClosed();
 	QString device;
@@ -52,7 +51,6 @@ int main(int argc, char *argv[])
 			qWarning() << Q_FUNC_INFO << fcss.fileName() << "not found";
 		}
 	}
-	SingleApp sapp(false);
 	MainWindow mw(device, baud);
 	if (! filename.isEmpty())
 	{

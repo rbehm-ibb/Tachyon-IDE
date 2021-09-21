@@ -6,3 +6,4 @@ bin
 *~
 Makefile
 html
+.qmake.stash

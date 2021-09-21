@@ -54,10 +54,10 @@ void WordsModel::analyse(QString source)
 	beginResetModel();
 	m_data.clear();
 	const QRegExp sep("\\s");
-	const QStringList lines = source.split('\n', QString::KeepEmptyParts);
+	const QStringList lines = source.split('\n', Qt::KeepEmptyParts);
 	for (int lineno = 0; lineno < lines.size(); ++lineno)
 	{
-		const QStringList words = lines[lineno].split(sep, QString::SkipEmptyParts);
+		const QStringList words = lines[lineno].split(sep, Qt::SkipEmptyParts);
 //		qDebug() << Q_FUNC_INFO << lineno << lines[lineno] << words;
 		for (int i = 0; i < words.size(); ++i)
 		{

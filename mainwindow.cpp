@@ -51,6 +51,8 @@ MainWindow::MainWindow(const QString device, uint baud, QWidget *parent)
 	act->setShortcut(QKeySequence::SaveAs);
 	fileMenu->addAction(act);
 	connect(act, &QAction::triggered, this, &MainWindow::saveAs);
+	prevMenu = fileMenu->addMenu("Previous");
+	readPrev();
 	fileMenu->addSeparator();
 	fileMenu->addAction(actQuit);
 	toolbar->addSeparator();
@@ -58,7 +60,7 @@ MainWindow::MainWindow(const QString device, uint baud, QWidget *parent)
 //	act->setShortcut(QKeySequence("Ctrl+R"));
 	editMenu->addAction(act);
 	connect(act, &QAction::triggered, this, &MainWindow::rescan);
-	act = toolbar->addAction(QIcon(":/icons/pics/date.png"), tr("Date"));
+	act = toolbar->addAction(QIcon(":/icons/pics/date.png"), tr("Insert Date"));
 	connect(act, &QAction::triggered, this, &MainWindow::enterDate);
 	editMenu->addAction(act);
 	act = toolbar->addAction(QIcon(":/icons/pics/text_uppercase.png"), tr("Upper case"));
@@ -113,7 +115,7 @@ MainWindow::MainWindow(const QString device, uint baud, QWidget *parent)
 	connect(m_console.data(), &Console::sendSerial, m_prop, &Prop::send);
 
 	m_wordsDock = new QDockWidget(tr("Words"), this);
-	m_wordsDock->setFeatures(QDockWidget::AllDockWidgetFeatures);
+	m_wordsDock->setFeatures(QDockWidget::DockWidgetMovable);
 	m_wordsDock->setAllowedAreas(Qt::LeftDockWidgetArea);
 	addDockWidget(Qt::LeftDockWidgetArea, m_wordsDock);
 	m_wordsDock->setWidget(m_wordsView = new WordsView(m_wordsModel));
@@ -122,7 +124,7 @@ MainWindow::MainWindow(const QString device, uint baud, QWidget *parent)
 	connect(m_wordsView, &WordsView::currentMoved, this, &MainWindow::currentMoved);
 
 	m_helpDock = new QDockWidget(tr("Help"), this);
-	m_helpDock->setFeatures(QDockWidget::AllDockWidgetFeatures);
+	m_helpDock->setFeatures(QDockWidget::DockWidgetMovable);
 	m_helpDock->setAllowedAreas(Qt::LeftDockWidgetArea);
 	addDockWidget(Qt::LeftDockWidgetArea, m_helpDock);
 	HelpModel *help = new HelpModel(this);
@@ -131,7 +133,7 @@ MainWindow::MainWindow(const QString device, uint baud, QWidget *parent)
 
 
 	m_findDock = new QDockWidget(tr("Find"), this);
-	m_findDock->setFeatures(QDockWidget::AllDockWidgetFeatures);
+	m_findDock->setFeatures(QDockWidget::DockWidgetMovable);
 	m_findDock->setAllowedAreas(Qt::BottomDockWidgetArea);
 	addDockWidget(Qt::BottomDockWidgetArea, m_findDock);
 	m_findDock->setWidget(m_findDialog = new FindDialog);
@@ -156,21 +158,19 @@ void MainWindow::quit()
 void MainWindow::about()
 {
 //	QIcon save = windowIcon();
-	char year[] = "2017";
+	char year[] = "2017-2021";
 	QString text("<h1>%1</h1>"
 		     "<p>Version %2"
 		     "<p>&copy; %3, <img src=\":/logo/ibb-logo\">"
-//		     "<p>Web: <a href=\"https://github.com/rbehm-ibb/Tachyon-IDE\">https://github.com/rbehm-ibb/Tachyon-IDE</a>"
+		     "<p>Web: <a href=\"https://github.com/rbehm-ibb/Tachyon-IDE\">https://github.com/rbehm-ibb/Tachyon-IDE</a>"
 		     "<p>Mail: <a href=\"mailto:rbehm@hushmail.com\">rbehm@hushmail.com</a>"
 		     "<p>Using  <img src=\":/stdicons/qt-logo-about.png\"> %5"
+		     "<p> Tachyon and Tachyon logo (c) <a href=\"https://sourceforge.net/u/pbjtech/profile/\">Peter Jakicki</a>"
 		     "<p>Connected at %6"
 		     );
 	text = text
-		.arg(qApp->applicationName())
-		.arg(qApp->applicationVersion())
-		.arg(year)
-		.arg(qVersion())
-		.arg(m_prop->device())
+		.arg(qApp->applicationName(), qApp->applicationVersion())
+		.arg(year, qVersion(), m_prop->device())
 		;
 	QMessageBox::about(this, qApp->applicationName(), text);
 }
@@ -256,6 +256,7 @@ void MainWindow::loadFile(const QString fileName)
 				      QMessageBox::Yes);
 		return;
 	}
+	addPrev(f.fileName());
 	QTextStream s(&f);
 	QString text = s.readAll();
 	m_editor->setPlainText(text);
@@ -293,6 +294,7 @@ void MainWindow::saveFile(const QString fileName)
 	}
 	m_lFile->setText(f.fileName());
 	Config::setValue("file/name", f.fileName());
+	addPrev(f.fileName());
 	m_changed = false;
 }
 
@@ -332,6 +334,26 @@ void MainWindow::textChanged()
 void MainWindow::deviceChanged(const QString deviceBaud) const
 {
 	m_lPort->setText(deviceBaud);
+}
+
+void MainWindow::loadPrev()
+{
+	QAction *act = qobject_cast<QAction*>(sender());
+	qDebug() << Q_FUNC_INFO << sender() << act->text();
+	QFile f(act->text());
+	if (! f.open(QIODevice::ReadOnly))
+	{
+		qWarning() << Q_FUNC_INFO << f.fileName() << f.errorString();
+		return;
+	}
+	QTextStream s(&f);
+	QString text = s.readAll();
+	m_editor->setPlainText(text);
+	m_lFile->setText(f.fileName());
+	Config::setValue("file/name", f.fileName());
+	m_wordsModel->analyse(text);
+	m_changed = false;
+
 }
 
 void MainWindow::saveWords()
@@ -432,4 +454,48 @@ void MainWindow::closeEvent(QCloseEvent *event)
 		}
 		qApp->closeAllWindows();
 	}
+}
+
+void MainWindow::addPrev(const QString fn)
+{
+	QStringList prev = readPrev();
+	if (! prev.contains(fn))
+	{
+		prev.prepend(fn);
+	}
+	while (prev.count() > 10)
+	{
+		prev.removeLast();
+	}
+	Config::conf()->beginWriteArray("file/previous", prev.count());
+	for (int i = 0; i < prev.count(); ++i)
+	{
+		Config::conf()->setArrayIndex(i);
+		Config::setValue("prev", prev.at(i));
+	}
+	Config::conf()->endArray();
+	readPrev();	// update menu
+}
+
+const QStringList MainWindow::readPrev() const
+{
+	QStringList prev;
+	int n = Config::conf()->beginReadArray("file/previous");
+	for (int i = 0; i < n; ++i)
+	{
+		Config::conf()->setArrayIndex(i);
+		const QString fn = Config::stringValue("prev");
+		if (! fn.isEmpty())
+		{
+			prev << fn;
+		}
+	}
+	Config::conf()->endArray();
+	prevMenu->clear();
+	foreach (const QString &s, prev)
+	{
+		QAction *act = prevMenu->addAction(QIcon(":/fileopen"), s);
+		connect(act, &QAction::triggered, this, &MainWindow::loadPrev);
+	}
+	return prev;
 }

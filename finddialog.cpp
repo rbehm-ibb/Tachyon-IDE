@@ -28,7 +28,7 @@ FindDialog::FindDialog(QWidget *parent)
 void FindDialog::findSlot()
 {
 	const QString text = findString->text();
-	QTextDocument::FindFlags options = 0;
+	QTextDocument::FindFlags options = QTextDocument::FindFlags();
 	emit find(text, options);
 }
 
