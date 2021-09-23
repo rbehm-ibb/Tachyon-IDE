@@ -23,6 +23,14 @@ FindDialog::FindDialog(QWidget *parent)
 	connect(bf, &QPushButton::clicked, this, &FindDialog::findSlot);
 	connect(br, &QPushButton::clicked, this, &FindDialog::findBackSlot);
 	connect(findString, &QLineEdit::returnPressed, this, &FindDialog::findSlot);
+	QAction *findAction = new QAction("Find", this);
+	addAction(findAction);
+	findAction->setShortcut(QKeySequence("F3"));
+	connect(findAction, &QAction::triggered, this, &FindDialog::findSlot);
+	findAction = new QAction("FindRev", this);
+	addAction(findAction);
+	findAction->setShortcut(QKeySequence("Shift+F3"));
+	connect(findAction, &QAction::triggered, this, &FindDialog::findBackSlot);
 }
 
 void FindDialog::findSlot()

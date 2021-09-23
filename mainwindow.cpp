@@ -24,7 +24,6 @@ MainWindow::MainWindow(const QString device, uint baud, QWidget *parent)
 	, m_console(new Console)
 {
 	setWindowTitle(qApp->applicationName() + " " + qApp->applicationVersion());
-//	setAttribute(Qt::WA_DeleteOnClose);
 	auto fileMenu = menuBar()->addMenu(tr("&File"));
 	auto editMenu = menuBar()->addMenu(tr("&Edit"));
 	auto propMenu = menuBar()->addMenu(tr("&Prop"));
@@ -133,7 +132,7 @@ MainWindow::MainWindow(const QString device, uint baud, QWidget *parent)
 
 
 	m_findDock = new QDockWidget(tr("Find"), this);
-	m_findDock->setFeatures(QDockWidget::DockWidgetMovable);
+	m_findDock->setFeatures(QDockWidget::AllDockWidgetFeatures);
 	m_findDock->setAllowedAreas(Qt::BottomDockWidgetArea);
 	addDockWidget(Qt::BottomDockWidgetArea, m_findDock);
 	m_findDock->setWidget(m_findDialog = new FindDialog);
@@ -251,8 +250,7 @@ void MainWindow::loadFile(const QString fileName)
 		qWarning() << Q_FUNC_INFO << f.fileName() << f.errorString();
 		QMessageBox::critical(this, "Problem loading File",
 					      QString("The file\n\n%1\n\ncannot be opened.\n\n%2")
-				      .arg(f.fileName())
-				      .arg(f.errorString()),
+				      .arg(f.fileName(), f.errorString()),
 				      QMessageBox::Yes);
 		return;
 	}
@@ -275,8 +273,7 @@ void MainWindow::saveFile(const QString fileName)
 		qWarning() << Q_FUNC_INFO << f.fileName() << f.errorString();
 		QMessageBox::critical(this, "Problem saving File",
 					      QString("The file\n\n%1\n\ncannot be created.\n\n%2")
-				      .arg(f.fileName())
-				      .arg(f.errorString()),
+				      .arg(f.fileName(), f.errorString()),
 				      QMessageBox::Yes);
 		return;
 	}
@@ -286,8 +283,7 @@ void MainWindow::saveFile(const QString fileName)
 	{
 		QMessageBox::critical(this, "Problem writing to File",
 					      QString("The file\n\n%1\n\ncannot be saved.\n\n%2\n%3")
-				      .arg(f.fileName())
-				      .arg(f.errorString())
+				      .arg(f.fileName(), f.errorString())
 				      .arg(s.status()),
 				      QMessageBox::Yes);
 		return;

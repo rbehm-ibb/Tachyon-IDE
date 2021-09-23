@@ -21,3 +21,10 @@
 - add Menu for previous files
 - add ref to Peter in about()
 - some fixes in the used lib
+
+**V1.10 2021-09-22**
+- Doxyfile
+- add help files
+- add glossary 
+- add hotkey for find dialogue
+
