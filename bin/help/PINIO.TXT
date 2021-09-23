@@ -1,0 +1,28 @@
+--- PINIO.TXT
+--- Pin outputs - all set DIRA automatically
+LOW ( pin -- )			Make the pin a LOW output (Sets DIRA)
+HIGH ( pin -- )			Make the pin a HIGH output (Sets DIRA)
+FLOAT ( pin -- )		Make the pin an input (Resets DIRA)
+
+--- Multiple pin outputs - mask operation is direct and faster
+OUTCLR ( pinmask -- )		Clear the pins to LOW outputs (Sets DIRA)
+OUTSET ( pinmask -- )		Set the pins to HIGH output (Sets DIRA)
+OUTPUTS ( pinmask -- )		Set the pins to outputs (does not write OUTA)
+
+--- Fast pin output - stack parameter not dropped
+H ( pinmask -- pinmask )	Fast HIGH
+L ( pinmask -- pinmask )	Fast LOW
+T ( pinmask -- pinmask )	Fast toggle
+P ( pinmask -- pinmask )	Fast PULSE high (4 clock cycles)
+F ( pinmask -- pinmask )	Fast FLOAT
+
+--- Pin input
+PIN@ ( pin -- flg )		Read state of pin as a flag
+IN ( pinmask -- flg )		Read state of pins as flag (any high will be TRUE)
+
+INPUTS ( pinmask -- )		Set pins to inputs
+Examples:
+
+Details:
+
+Related:

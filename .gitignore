@@ -1,7 +1,8 @@
 .build
 .cvsignore
 CVS
-bin
+bin/Tachyon-4th-IDE.rc
+bin/tachyonForth-IDE
 *.pro.user
 *~
 Makefile

@@ -1,0 +1,10 @@
+WAITCNT ( -- )		Wait for CNT then add DELTA
+
+DELTA ( ticks -- )	Add delta to CNT and perform first WAITCNT
+
+(WAITPNE) ( -- )		Wait until input is low then capture CNT in REG1 where REG4 = mask
+WAITLO
+
+(WAITPEQ)		Wait until input is high then capture CNT in REG2 where REG4 = mask
+WAITHI
+

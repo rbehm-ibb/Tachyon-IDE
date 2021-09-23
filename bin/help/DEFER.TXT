@@ -1,0 +1,34 @@
+DEFER		DEFER the code that follows in this definition so that it executes at the end of the command line.
+
+When a word needs more information that is supplied postfix it becomes necessary to defer any more action
+until that information becomes available. So the code address following defer is placed on a defer stack.
+Also because an action is deferred this permits unresolved words to be stored as strings to be processed
+by the deferred action. At the end of line execution the defer stack is processed FIFO style.
+
+Example:
+pre SQUARE	DEFER    PRINT" is " DUP * . ;
+
+Result:
+SQUARE 14 is 196
+
+In this case SQUARE deferred execution until after 14 was already processed and so was
+able to read the number postfix style. Note that a pre-emptive defintion is used as we
+want it to execute immediately it is encounted and then in this case defer further action
+until the end of the line.
+
+Example:
+pre pass	OFF ANYCASE DEFER	" forth" $= IF PRINT" Welcome!" ELSE PRINT" incorrect password" THEN ;
+
+Before deferring execution "pass" disables auto case conversion so that any word that is not recognized after pass
+does not get converted before Tachyon retries after which it becomes a string.
+So after DEFER we can expect a string on the stack which must match our password.
+In the event that an empty line is presented the defer action is still active so typing the actual password
+on a new line will still work.
+
+Misc examples:
+pre SHOW DEFER  DUP " VARIABLES" $= IF DROP .VARS EXIT THEN " ROMS" $= IF lsroms THEN ;
+
+
+
+
+

@@ -1,0 +1,31 @@
+LOOPS.TXT
+ FOR ( cnt -- )	Enter a FOR NEXT loop which will loop for cnt times. A default index FROM 0 and a index step BY 1 is used unless these are overridden before FOR using FROM and/or BY.
+
+ NEXT ( -- )	Decrement the FOR count and exit if zero. Always increment the FROM index by BY. On exit pop the four loop parameters from the loop stack A default index FROM 0 and a index step BY 1 is used unless these are overridden before FOR using FROM and/or BY.
+
+ FROM ( start -- ) Set the
+
+Examples:
+--- Display all printable ASCII characters
+$20 FROM 96 FOR I EMIT NEXT
+--- Display all printable ASCII characters in reverse
+$7F FROM -1 BY 96 FOR I EMIT NEXT
+~}|{zyxwvutsrqponmlkjihgfedcba`_^]\[ZYXWVUTSRQPONMLKJIHGFEDCBA@?>=<;:9876543210/.-,+*)('&%$#"!
+
+Details:
+Loops are standardized in V4.5 using FOR NEXT in that DO LOOP +LOOP and Tachyon variants ADO and FORDO are deprecated.
+Even though the traditional FOR NEXT did not maintain an index or allowed variable steps like DO LOOP, these are
+still maintained by FOR NEXT in V4.5 by augmenting it with two basic instructions
+FROM and BY to both specify the starting index and the step value to increment the index BY
+
+The loop stack is maintained in hub RAM at $180 for COG 0. Any other Tachyon cogs should allocate 12 to 16 bytes typically
+for 3 to 4 levels recommended (rarely reaches 4)
+
+Each FOR will push four parameters onto the loop stack being:
+FOR		The number of times FOR NEXT will loop (not affected by BY)
+FROM		The value that the index starts FROM (0 if not set)
+BY		The value to increment the FROM index I by (1 if not set)
+BRANCH		The address after FOR which is used by NEXT
+
+Related:
+NEXT LEAVE I J FOR! FOR@ BY! +LOOP ADO LP!

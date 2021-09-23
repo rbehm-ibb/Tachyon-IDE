@@ -1,0 +1,25 @@
+1+ ( u -- u+1 )
+1- ( u -- u-1 )
++
+-
+2+
+4+
+2-
+MIN
+MAX
+*
+UM*
+U/
+U/MOD
+/
+*/ ( u1 um ud -- ures1 )
+UM*/
+ABS
+?NEGATE
+NEGATE
+
+UM*
+UM/MOD
+UM/MOD64 ( Dbl.dividend divisor -- remainder Dbl.quotient)
+
+UM/MOD32 ( Dbl.dividend divisor -- remainder Dbl.quotient)

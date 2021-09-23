@@ -1,0 +1,13 @@
+
+{HELP SPIO ( send -- receive ) ( A: miso mosi sck )
+REGS: 0=sck 1=mosi 2=miso 3=cnt
+*** SERIAL PERIPHERAL INPUT OUTPUT MODULE ***
+Transfers 1 to 32 bits msb first
+Transmit data must be left justified ready for transmission
+Receive data is in correct format
+Data is shifted in and out while the clock is low
+The clock is left low between transfers
+}
+org _RUNMOD
+' COGREGS: 0=sck 1=mosi 2=miso 3=cnt
+' SPIO ( send -- receive ) ( A: miso mosi sck )

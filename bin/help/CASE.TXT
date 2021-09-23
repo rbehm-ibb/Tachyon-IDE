@@ -1,0 +1,25 @@
+CASE.TXT
+
+ SWITCH ( val -- ) 	Store the switch value in the task's (cog's) switch register or stack. This value is then referenced by CASE statements.
+
+ CASE ( val -- )	Compare the value with the switch register value and execute following code if equal. Equivalent to "SWITCH@ = IF"
+
+ BREAK ( -- )	Terminate execution and return to caller. Equivalent to "EXIT THEN"
+
+ SWITCH@ ( -- val )	Fetch the switch value usually to use directly or to perform another type of comparison such as WITHIN etc.
+
+Examples:
+pub MYCASE ( val -- )
+	--- store value to SWITCH register
+	SWITCH
+	$0D CASE PRINT"  Welcome!" CR BREAK
+	$20 CASE PRINT"  <making room> " BREAK
+	--- discard return address to escape
+	$1B CASE R> DROP PRINT" Escaping " CR BREAK
+	--- default is just to echo the character
+	SWITCH@ EMIT
+	;
+
+pub DEMOCASE	BEGIN KEY MYCASE AGAIN ;
+
+

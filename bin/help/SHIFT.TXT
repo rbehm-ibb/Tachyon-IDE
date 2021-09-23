@@ -1,0 +1,15 @@
+ROL
+ROR
+SHR
+>>
+8>>
+SHL
+<<
+8<< ( n -- n<<8 )	Shift n left by 8 bits
+2/ ( n -- n>>2 )	Shift n right 1 bit or unsigned /2
+2* ( n -- n<<2 )	Shift n left 1 bit or unsigned *2
+4*
+SAR
+SPLIT9
+REV
+MASK
