@@ -1,0 +1,13 @@
+<  ( a b -- flg ) H PUB If a is less than b then return with true flag
+<= ( a b -- flg ) X PUB if a < or = to b then flg = true
+<>  ( n1 n2 -- flg )  C2 PUB Return with flag indicating if n1 <> n2 (equiv. to = NOT ) 
+=  ( a b -- flg ) C PUB Compare a with b 
+=> ( a b -- flg ) X PUB if a > or = to b then flg = true
+>  ( a b -- flg ) C PUB If a > b then flg = true
+0<  ( val -- flg ) C PUB If val is less than zero (negative) then return with true flag
+0<> ( n -- flg )  C2 PUB Return with flag indicating if n <> 0 (equiva. to 0= NOT )
+0=  ( val -- flg ) C PUB Compare n to zero and return with boolean flag
+NOT ( val -- flg ) C PUB Alias for 0=
+U<  ( a b -- flg ) C PUB If a is unsigned less than b then return with true flag
+U> ( a b -- flg ) X PUB If a is unsigned greater than b then return with true flag
+WITHIN  ( val min max -- flg ) H PUB Return with flag if val is within min and max (inclusive, not ANSI)

@@ -1,0 +1,5 @@
+!RP ( -- ) C2 PUB Init return stack pointer
+>R ( a -- ) C PUB Push a from data stack onto return stack
+FORK ( --  ) X PUB Duplicate top of return stack
+R@ ( -- a ) X PUB Copy top of return stack to tos
+R> ( -- a ) C PUB Pop a from return stack onto data stack

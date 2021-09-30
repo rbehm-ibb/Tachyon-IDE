@@ -1,0 +1,23 @@
+-ROT ( a b c -- c a b ) H PUB Reverse rotate (equiv. to ROT ROT )
+!SP ( ? -- ) H PUB Init stack pointer, clear the stack
+?DUP ( a -- a a ) C PUB dup if a <>0, else ( a -- a )
+2DROP  ( a b -- ) C PUB Drop top 2 items off the stack (pop)
+2DUP ( a b -- a b a b ) H PUB Duplicate the top two stack items (equiv. to OVER OVER ) (push)
+2OVER ( n1 n2 n3 n4 -- n1 n2 n3 n4 n1 n2 ) H PUB Copy 3rd and 4th items to tos
+2OVER ( a b c d -- a b c d a b ) H PUB Duplicate the next two stack items (as if it is a double number) (push)
+2SWAP ( n1 n2 n3 n4 -- n3 n4 n1 n2 ) H PUB Swap items 1,2 with items 3,4
+3DROP ( a b c -- ) C PUB Drop 3 top stack items
+3DUP ( n1 n2 n3 -- n1 n2 n3 n1 n2 n3 ) X PUB Copy first 3 items to tos
+3RD ( a b c d -- a b c d b ) C PUB Copy third stack item (push)
+4TH ( a b c d -- a b c d a ) C PUB Copy fourth stack item (push)
+BOUNDS ( n1 n2 -- n1+n2 n1 ) C PUB n1 becomes n1+n2, n2 unchanged
+DEPTH ( -- depth ) H PUB Return with current depth of data stack (but does not include depth itself) (push)
+DROP ( a -- ) C PUB Drop top item off the stack (pop)
+DROP; ( a -- ) H PUB DROP ; - used by MOD
+DUP ( a -- a a ) C PUB Duplicate top item on stack (push)
+LP! ( a -- )  H PUB Set loop stack memory - each cog that uses FOR NEXT needs room for 8 longs or more
+NIP ( a b -- b ) C PUB Drop 2nd stack item (pop)
+OVER ( a b -- a b a ) C PUB Copy 2nd stack location to first (push)
+OVER+ ( n1 n2 -- n1 n2+n1 ) C PUB n2 becomes n1+n2, n1 unchanged
+ROT ( a b c -- b c a ) C PUB Move 3rd item to 1st, 1st to 2nd, 2nd to 3rd 
+SWAP  ( a b -- b a )  C PUB Swap top 2 stack items

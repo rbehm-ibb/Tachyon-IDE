@@ -1,0 +1,36 @@
+ << ( n cnt -- n2 ) C PUB Shift n left cnt places 
+ >> ( n1 cnt -- n2 ) C PUB Shift n right cnt places 
+>| ( mask -- bit ) X PUB Convert mask to bit position of first lsb that is set e.g. 512 >| . --- 9  ok
+>b ( n1 -- byte ) C PUB Mask n to the l.s. bit
+>B ( n -- byte )  C PUB Mask off a byte ($FF AND)
+>N ( n -- nib )  C PUB Mask off a nibble ($0F AND)
+|< ( bit -- mask ) X PUB Alias for MASK
+2*  ( a -- b ) C PUB Shift left one bit (multiply by two unsigned)
+2/  ( a -- b ) C PUB Shift right one bit (divide by two unsigned)
+4* ( a -- b ) C PUB Shift left two bits (multiply by 4 unsigned)
+8<< ( a -- b ) C PUB Fast 8-bit shift left - avoids slow push and pop of literal
+8>> ( a -- b ) C PUB Fast 8-bit shift right - avoids slow push and pop of  literal (i.e. $12345678 -> $00123456)
+AND  ( a b -- c ) C PUB c = a AND b
+ANDN  ( a b -- c ) C PUB c = a AND NOT b ($DEADBEEF $FF ANDN .LONG DEAD.BE00 ok)
+BIT! ( addr flg -- ) H PUB store 1 in long at addr if flg<>0, else store 0
+BIT? ( mask addr -- mask flg ) C PUB flg = long at addr anded with mask
+FALSE ( -- 0 ) C PUB Constant
+INVERT  ( a -- b ) H PUB Bitwise inversion - all bits are flipped (i.e. $FFFFFFF5 -> $0A )
+L>S ( n -- lsb9 h ) C PUB Specialized operation for filesystem addresses
+MASK  ( bit -- mask )  C PUB Convert 5-bit number to a mask over 32-bits - mask=0 if bit>31
+NOOP ( -- ) H PUB No operation
+NOP ( -- ) C PUB No operation - ( 0.4 us ) - can be used as a placeholder and overwritten later e.g. pri trap nop nop ;
+OFF ( -- 0 ) C PUB Alias for FALSE
+ON ( -- -1 ) C PUB Alias for TRUE
+OR  ( a b -- c ) C PUB c = a OR b ($123400 $56 OR .LONG 0012.3456 ok)
+REV  ( n1 bits -- n2 )  C PUB Reverse LSBs of n1 and zero-extend
+ROL  ( a cnt -- c ) C PUB Rotate a left with b31 rotating into b0 for cnt ($12345678 8 ROL .LONG 3456.7812 ok)
+ROR  ( a cnt -- c ) C PUB Rotate right bit b0 rotating into b31 for cnt ($DEADBEEF 8 ROR .LONG EFDE.ADBE ok)
+SAR ( a n -- b ) C PUB b = a Shift Arithmetic Right n places
+SHL  ( a cnt -- c ) C PUB Shift left all bits by cnt
+SHR  ( a cnt -- c ) C PUB Shift right all bits by cnt
+TOG ( mask caddr -- ) H PUB toggle bits defined by mask in hub byte at caddr
+TRUE ( -- -1 ) C PUB Constant (although any non-zero number is treated as true as well
+XOR  ( a b -- c ) C PUB c = a XOR b ($123456 $FF XOR .LONG 0012.34A9 ok)
+|<= ( bit -- ; -- mask ) H PRE
+
