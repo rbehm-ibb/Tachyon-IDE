@@ -1,13 +1,14 @@
 [Desktop Entry]
-Comment[en_US]=
 Comment=
+Comment[en_US]=
 Exec=/home/behm/dvlsw/@ibb/Tachyon-IDE/bin/tachyonForth-IDE
-GenericName[en_US]=
 GenericName=
+GenericName[en_US]=
 Icon=/home/behm/dvlsw/@ibb/Tachyon-IDE/pics/useforthlogo-s.png
 MimeType=
+Name[en_GB]=Tachyon-IDE
+Name=Tachyon-IDE
 Name[en_US]=
-Name=
 Path=
 StartupNotify=true
 Terminal=false
